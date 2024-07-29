@@ -1,51 +1,51 @@
-/**
- * GUESS THE NUMBER GAME USING OOPS
- */
-
 import java.util.Random;
 import java.util.Scanner;
 
-class Game{
-    int rand;
-    int noOfGuess = 0;
-    Game(){
-        Random obj = new Random();
-        rand = obj.nextInt(100);
-        takeUserInput();
+class Game {
+    int compInput;
+    int userInput;
+    int noOfGuess = 1;
+    public void mainMenu() {
+        System.out.println("=================== X Guess The Number Game X ===================");
+        System.out.println();
+        System.out.print("Enter the range value : ");
+        Scanner sc = new Scanner(System.in);
+        int range = sc.nextInt();
+        System.out.println("Value Range : 0 to " + (range - 1));
+
+        Random rand = new Random();
+        compInput = rand.nextInt(range);
+
+        userGuess();
+
     }
 
-    void takeUserInput(){
-        System.out.println("Enter your guess : ");
-        Scanner obj2 = new Scanner(System.in);
-        int guess = obj2.nextInt();
-        isCorrectNumber(guess);
-    }
+    public void userGuess(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Input your guess : ");
+        userInput = sc.nextInt();
 
-    void isCorrectNumber(int guess){
-        if(guess == rand ){
-            System.out.println("Congrats ! Correct Guess");
-            noOfGuess++;
-            getNoOfGuess();
+        if(userInput == compInput ){
+            System.out.println("Correct Guess ! You won ");
+            System.out.println("No. of guess taken : "+noOfGuess);
         }
-        else if(guess < rand){
-            System.out.println("Your guess is smaller , choose larger value");
+        else if(userInput < compInput){
+            System.out.println("Your Guess value is smaller ! Guess Larger value");
             noOfGuess++;
-            takeUserInput();
+            userGuess();
         }
-        else if(guess > rand){
-            System.out.println("Your guess is greater , choose smaller value");
+        else if(userInput > compInput){
+            System.out.println("Your Guess value is larger ! Guess Smaller value");
             noOfGuess++;
-            takeUserInput();
+            userGuess();
         }
-    }
 
-    void getNoOfGuess(){
-        System.out.println("Your Score : "+noOfGuess);
     }
 }
-
 public class GuessTheNumberGame {
     public static void main(String[] args) {
-        Game sc = new Game();
+        Game obj = new Game();
+        obj.mainMenu();
+
     }
 }
