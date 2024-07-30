@@ -27,17 +27,32 @@ class Game {
 
         if(userInput == compInput ){
             System.out.println("Correct Guess ! You won ");
-            System.out.println("No. of guess taken : "+noOfGuess);
+            if(noOfGuess <=3) {
+                System.out.println("No. of guess taken : " + noOfGuess);
+                System.out.println("You won");
+            }
         }
         else if(userInput < compInput){
             System.out.println("Your Guess value is smaller ! Guess Larger value");
             noOfGuess++;
-            userGuess();
+            if(noOfGuess <=3) {
+                userGuess();
+            }
+            else{
+                System.out.println("\nYou lose ! Your chances get finished ");
+                System.out.println("No. of guess taken : " + noOfGuess);
+            }
         }
         else if(userInput > compInput){
             System.out.println("Your Guess value is larger ! Guess Smaller value");
             noOfGuess++;
-            userGuess();
+            if(noOfGuess <=3) {
+                userGuess();
+            }
+            else{
+                System.out.println("\nYou lose ! Your chances get finished ");
+                System.out.println("No. of guess taken : " + noOfGuess);
+            }
         }
 
     }
