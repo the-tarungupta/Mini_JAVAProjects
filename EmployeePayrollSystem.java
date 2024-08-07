@@ -1,111 +1,123 @@
 import java.util.ArrayList;
 
-abstract class Employee{
-    private String name;
-    private int id;
+abstract class Employee {
+    int ID;
+    String name;
+    String dept;
+    float salary;
 
-    public Employee(String name , int id){
+    Employee(int ID, String name, String dept) {
+        this.ID = ID;
         this.name = name;
-        this.id = id;
+        this.dept = dept;
     }
 
-    public String getName(){
+    public int getID() {
+        return ID;
+    }
+
+    public String getName() {
         return name;
     }
 
-    public int getId(){
-        return id;
+    public String getDept() {
+        return dept;
     }
 
-    abstract public double calculateSalary();
+    abstract public float getSalary();
 
-    @Override
-    public String toString(){
-        return "Employee "+getId()+" [ name : "+getName()+" id : "+getId()+" salary : "+calculateSalary()+" ]";
-    }
-}
-
-class FullTimeEmployee extends Employee{
-    private double monthlySalary;
-
-    public FullTimeEmployee(String name , int id , double monthlySalary){
-        super(name , id);
-        this.monthlySalary = monthlySalary;
-    }
-
-    @Override
-    public double calculateSalary(){
-        return monthlySalary;
+    public String toString() {
+        return "Employee [" + " ID : " + getID() + " , Name : " + getName() + " , Department : " + getDept() + " , Salary : " + getSalary() + " ]";
     }
 }
 
-class PartTimeEmployee extends Employee{
-    private int hoursWorked;
-    private double hoursRate;
 
-    public PartTimeEmployee(String name , int id , int hoursWorked , double hoursRate){
-        super(name , id);
-        this.hoursWorked = hoursWorked;
-        this.hoursRate = hoursRate;
+class FullTimeEmployee extends Employee {
+    FullTimeEmployee(int ID, String name, String dept, float salary) {
+        super(ID, name, dept);
+        this.salary = salary;
     }
 
     @Override
-    public double calculateSalary() {
-        return hoursWorked * hoursRate;
+    public float getSalary() {
+        return salary;
     }
 }
 
-class Payroll{
-    ArrayList <Employee> arr ;
-    public Payroll(){
+
+class PartTimeEmployee extends Employee {
+    int daysWork;
+    int stipend;
+
+    PartTimeEmployee(int ID, String name, String dept, int daysWork, int stipend) {
+        super(ID, name, dept);
+        this.daysWork = daysWork;
+        this.stipend = stipend;
+    }
+
+    @Override
+    public float getSalary() {
+        salary = stipend * daysWork;
+        return salary;
+    }
+}
+
+
+class Payroll {
+    ArrayList<Employee> arr;
+
+    Payroll() {
         arr = new ArrayList<>();
     }
 
-    public void addEmployee(Employee emp){
+    public void addEmployee(Employee emp) {
         arr.add(emp);
     }
 
-    public void removeEmployee(int id){
-        Employee removeEmployee = null;
-        for(Employee emp : arr){
-            if(emp.getId()==id){
-                removeEmployee = emp;
+    public void displayEmployee() {
+        System.out.println("All Employee listed below : ");
+        for (Employee emp : arr) {
+            System.out.println(emp);
+        }
+        System.out.println();
+
+    }
+
+    public void removeEmployee(int ID) {
+        Employee removeEmp = null;
+        for (Employee emp : arr) {
+            if (emp.getID() == ID) {
+                removeEmp = emp;
                 break;
             }
         }
-        if(removeEmployee != null){
-            arr.remove(removeEmployee);
+        if (removeEmp != null) {
+            arr.remove(removeEmp);
         }
     }
 
-    public void displayEmployees(){
-        for(Employee emp : arr){
-            System.out.println(emp);
-        }
-    }
+
 }
 
-
 public class EmployeePayrollSystem {
+
     public static void main(String[] args) {
 
         Payroll obj = new Payroll();
-        FullTimeEmployee emp1 = new FullTimeEmployee("Shruti ",1,40000);
-        FullTimeEmployee emp2 = new FullTimeEmployee("Mukul",2,50000);
-        PartTimeEmployee emp3 = new PartTimeEmployee("Piyush",3,50,80);
 
-        obj.addEmployee(emp1);
-        obj.addEmployee(emp2);
-        obj.addEmployee(emp3);
+        FullTimeEmployee f1 = new FullTimeEmployee(11, "Tripti", "Manager", 56000);
+        PartTimeEmployee p1 = new PartTimeEmployee(21, "Devesh", "Director", 60 , 1200);
+        FullTimeEmployee f2 = new FullTimeEmployee(31, "Rohit", "Sales", 35000);
 
-        System.out.println("                    Display Employees ");
-        obj.displayEmployees();
+        obj.addEmployee(f1);
+        System.out.println("Employee Added Successfully\n");
+        obj.addEmployee(p1);
+        obj.displayEmployee();
 
-        System.out.println("                    Removing Employee ");
-        obj.removeEmployee(2);
+        obj.removeEmployee(21);
+        System.out.println("Employee Removed Successfully\n");
 
-        System.out.println("                    Remaining Employees ");
-        obj.displayEmployees();
+        obj.displayEmployee();
 
     }
 }
